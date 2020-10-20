@@ -1,0 +1,8 @@
+{
+  id: team.id,
+  name: team.name,
+  logo: team.logo,
+  league: team.league,
+  api_id: team.api_id,
+  api_used: team.api_used,
+}

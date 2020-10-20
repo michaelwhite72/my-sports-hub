@@ -1,0 +1,3 @@
+@teams.map do |team|
+  render partial: "team.json.jb", locals: { team: team }
+end

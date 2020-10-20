@@ -1,0 +1,1 @@
+render partial: "team.json.jb", locals: { team: @team }
