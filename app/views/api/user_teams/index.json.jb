@@ -1,1 +1,13 @@
-@userteams
+@userteams.map do |userteam|
+  render partial: "user_teams.json.jb", locals: { user_teams: userteam }
+end
+
+# @userteams
+
+# userteam = render partial: "user.json.jb", locals: { user: @user }
+
+# user[:teams] = @user.teams.map do |team|
+#   render partial: "api/teams/team.json.jb", locals: { team: team }
+# end
+
+# user

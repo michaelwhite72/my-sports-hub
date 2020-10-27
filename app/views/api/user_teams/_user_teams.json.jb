@@ -1,0 +1,7 @@
+{
+  id: user_teams.id,
+  User_id: user_teams.user_id,
+  Team_id: user_teams.team_id,
+  User: user_teams.user.email,
+  User_team: user_teams.team.name,
+}
