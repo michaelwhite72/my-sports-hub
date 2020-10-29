@@ -31,11 +31,13 @@ class Api::TeamsController < ApplicationController
         # "X-User-Email" => Rails.application.credentials.aws[:email]},
         "Authorization" => "#{Rails.application.credentials.sportsfeed_api[:api_key]}",
       })
-      .get("https://api.mysportsfeeds.com/v2.1/pull/#{team_league}/2019-2020-regular/team_stats_totals.json?team=#{team_api_id}")
-      .parse
+      .get("https://api.mysportsfeeds.com/v2.1/pull/#{team_league}/2019-2020-regular/standings.json?team=#{team_api_id}")
+      .parse["teams"]
 
     render "show.json.jb"
   end
 end
 
 # https://api.mysportsfeeds.com/v2.1/pull/nba/{season}/games.{format}
+# [0]["team"]
+# https://api.mysportsfeeds.com/v2.1/pull/nba/2019-2020-regular/standings.json?team=DAL

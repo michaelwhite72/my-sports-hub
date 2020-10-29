@@ -20,6 +20,23 @@ team = render partial: "team.json.jb", locals: { team: @team }
 #   }
 # end
 
-team[:team_stats] = @team_stats
+# team[:team_data] = @team_stats
+# ---> grabs all stats data for reference
+
+team[:team_venue] = @team_stats[0]["team"]["homeVenue"]["name"]
+team[:official_logo] = @team_stats[0]["team"]["officialLogoImageSrc"]
+team[:games_played] = @team_stats[0]["stats"]["gamesPlayed"]
+team[:games_won] = @team_stats[0]["stats"]["standings"]["wins"]
+team[:games_lost] = @team_stats[0]["stats"]["standings"]["losses"]
+team[:games_tied] = @team_stats[0]["stats"]["standings"]["ties"]
+team[:overall_rank] = @team_stats[0]["overallRank"]["rank"]
+team[:conference_name] = @team_stats[0]["conferenceRank"]["conferenceName"]
+team[:conference_rank] = @team_stats[0]["conferenceRank"]["rank"]
+team[:division_name] = @team_stats[0]["divisionRank"]["divisionName"]
+team[:division_rank] = @team_stats[0]["divisionRank"]["rank"]
+# team[:playoff_rank] = @team_stats[0]["playoffRank"]["rank"]
+
+# team[:games_points_for] = @team_stats[0]["stats"]["standings"]["pointsFor"]
+# team[:games_points_against] = @team_stats[0]["stats"]["standings"]["pointsAgainst"]
 
 team
