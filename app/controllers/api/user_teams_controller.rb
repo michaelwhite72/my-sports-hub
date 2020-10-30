@@ -3,7 +3,7 @@ class Api::UserTeamsController < ApplicationController
   before_action :authenticate_user
 
   def index
-    @userteams = UserTeam.where(user_id: current_user.id)
+    @teams = current_user.user_teams.map { |user_team| user_team.team }
     render "index.json.jb"
   end
 end

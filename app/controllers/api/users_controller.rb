@@ -12,8 +12,10 @@ class Api::UsersController < ApplicationController
 
     if @user.save
       #remove eval on front end build
-      eval(params[:team_ids]).each do |team_id|
-        UserTeam.create(user_id: @user.id, team_id: team_id)
+      if params[:team_ids].any?
+        eval(params[:team_ids]).each do |team_id|
+          UserTeam.create(user_id: @user.id, team_id: team_id)
+        end
       end
       render "show.json.jb", status: :created
     else
@@ -22,7 +24,7 @@ class Api::UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(current_user.id)
+    @user = current_user
     # user_teams = user.teams
     # schedule = {} ##there will be a team key, and a array of hashes for each key value
     #looping thru user teams with an each loop

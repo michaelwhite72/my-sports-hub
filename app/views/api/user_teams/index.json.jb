@@ -1,13 +1,24 @@
-@userteams.map do |userteam|
-  render partial: "user_teams.json.jb", locals: { user_teams: userteam }
+@teams.map do |team|
+  team_hash = render partial: "api/teams/team.json.jb", locals: { team: team }
+  # team_hash[:test_league] = "#{team.league}"
+  team_hash
+  api_response = HTTP
+    .headers({
+      # "X-User-Email" => Rails.application.credentials.aws[:email]},
+      "Authorization" => "#{Rails.application.credentials.sportsfeed_api[:api_key]}",
+    })
+    .get("https://api.mysportsfeeds.com/v2.1/pull/nfl/latest/games.json?team=#{team.api_id}")
+    .parse["games"]
+  team_hash[:schedule] = api_response.map do |game|
+    {
+      start_time: game["schedule"]["startTime"],
+      week: game["schedule"]["week"],
+      away_team: game["schedule"]["awayTeam"]["abbreviation"],
+      home_team: game["schedule"]["homeTeam"]["abbreviation"],
+      broadcast: game["schedule"]["broadcasters"][0],
+    # Broadcast: game["schedule"],
+    }
+  end
+
+  team_hash
 end
-
-# @userteams
-
-# userteam = render partial: "user.json.jb", locals: { user: @user }
-
-# user[:teams] = @user.teams.map do |team|
-#   render partial: "api/teams/team.json.jb", locals: { team: team }
-# end
-
-# user
