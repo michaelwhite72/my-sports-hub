@@ -1,13 +1,13 @@
 team = render partial: "team.json.jb", locals: { team: @team }
-# team[:news] = @team_news.map do |article|
-#   {
-#     source_name: article["source"]["name"],
-#     title: article["title"],
-#     description: article["description"],
-#     url: article["url"],
-#     url_image: article["urlToImage"],
-#   }
-# end
+team[:articles] = @team_news.map do |article|
+  {
+    source_name: article["source"]["name"],
+    title: article["title"],
+    description: article["description"],
+    url: article["url"],
+    url_image: article["urlToImage"],
+  }
+end
 
 # team[:team_games] = @team_game_time.map do |game|
 #   {

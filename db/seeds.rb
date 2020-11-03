@@ -13,8 +13,11 @@
 # ])
 
 teams = Team.create!([
-  { name: "Houston Txans", logo: "HoustonTexans.jpg", league: "NFL", api_id: "HOU", api_used: "sportsfeed" },
-  { name: "Los Angeles Lakers", logo: "LaLakers.jpg", league: "NBA", api_id: "14", api_used: "balldontlie" },
+  { name: "Kansas City Chiefs", logo: "KCCHiefs.jpg", league: "NFL", api_id: "KC", api_used: "sportsfeed" },
+  { name: "Atlanta Falcons", logo: "AtlantsFalcons.jpg", league: "NFL", api_id: "ATL", api_used: "sportsfeed" },
+  { name: "Golden State Warriors", logo: "GoldenState.jpg", league: "NBA", api_id: "GSW", api_used: "sportsfeed" },
+  { name: "Atlanta Hawks", logo: "AtlantsHawks.jpg", league: "NBA", api_id: "ATL", api_used: "sportsfeed" },
+  { name: "Dallas Mavericks", logo: "Mavericks.jpg", league: "NBA", api_id: "DAL", api_used: "sportsfeed" },
 ])
 
 # user_team = UserTeam.create!([

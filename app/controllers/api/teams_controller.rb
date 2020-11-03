@@ -15,16 +15,10 @@ class Api::TeamsController < ApplicationController
         # "X-User-Email" => Rails.application.credentials.aws[:email]},
         "Authorization" => "Bearer #{Rails.application.credentials.news_api[:api_key]}",
       })
-      .get("http://newsapi.org/v2/everything?q=#{team_search}&sortBy=publishedAt")
+      .get("http://newsapi.org/v2/everything?q=#{team_search}&from=2020-10-26&sortBy=publishedAt")
       .parse["articles"]
 
-    # @team_game_time = HTTP
-    #   .headers({
-    #     # "X-User-Email" => Rails.application.credentials.aws[:email]},
-    #     "Authorization" => "#{Rails.application.credentials.sportsfeed_api[:api_key]}",
-    #   })
-    #   .get("https://api.mysportsfeeds.com/v2.1/pull/#{team_league}/2020-2021-regular/games.json?team=#{team_api_id}")
-    #   .parse["games"]
+    # http://newsapi.org/v2/everything?q=bitcoin&from=2020-10-03&sortBy=publishedAt&apiKey=0c0742d9f8c94b659450fc99da6df3de
 
     @team_stats = HTTP
       .headers({
@@ -37,7 +31,3 @@ class Api::TeamsController < ApplicationController
     render "show.json.jb"
   end
 end
-
-# https://api.mysportsfeeds.com/v2.1/pull/nba/{season}/games.{format}
-# [0]["team"]
-# https://api.mysportsfeeds.com/v2.1/pull/nba/2019-2020-regular/standings.json?team=DAL
