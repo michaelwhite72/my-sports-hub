@@ -51,13 +51,17 @@ class Api::UsersController < ApplicationController
     @user.email = params[:email] || @user.email
 
     if params[:password]
-      if @user.authenticate(params[:old_password])
-        @user.update!(
-          password: params[:password],
-          password_confirmation: params[:password_confirmation],
-        )
-      end
+      @user.password = params[:password]
     end
+
+    # if params[:password]
+    #   if @user.authenticate(params[:old_password])
+    #     @user.update!(
+    #       password: params[:password],
+    #       password_confirmation: params[:password_confirmation],
+    #     )
+    #   end
+    # end
 
     if @user.save
       if params[:team_ids]
