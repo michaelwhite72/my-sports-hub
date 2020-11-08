@@ -1,4 +1,6 @@
 team = render partial: "team.json.jb", locals: { team: @team }
+
+# Grab all article for team from API News
 team[:articles] = @team_news.map do |article|
   {
     source_name: article["source"]["name"],
@@ -8,21 +10,12 @@ team[:articles] = @team_news.map do |article|
     url_image: article["urlToImage"],
   }
 end
-
-# team[:team_games] = @team_game_time.map do |game|
-#   {
-#     Start_Time: game["schedule"]["startTime"],
-#     Week: game["schedule"]["week"],
-#     Away_Team: game["schedule"]["awayTeam"]["abbreviation"],
-#     Home_Team: game["schedule"]["homeTeam"]["abbreviation"],
-#     Broadcast: game["schedule"]["broadcasters"][0],
-#   # Broadcast: game["schedule"],
-#   }
-# end
+# Article API feed END
 
 # team[:team_data] = @team_stats
 # ---> grabs all stats data for reference
 
+# Team Information Feed Start
 team[:team_venue] = @team_stats[0]["team"]["homeVenue"]["name"]
 team[:official_logo] = @team_stats[0]["team"]["officialLogoImageSrc"]
 team[:games_played] = @team_stats[0]["stats"]["gamesPlayed"]
@@ -34,6 +27,8 @@ team[:conference_name] = @team_stats[0]["conferenceRank"]["conferenceName"]
 team[:conference_rank] = @team_stats[0]["conferenceRank"]["rank"]
 team[:division_name] = @team_stats[0]["divisionRank"]["divisionName"]
 team[:division_rank] = @team_stats[0]["divisionRank"]["rank"]
+# Team Information feed end
+
 # team[:playoff_rank] = @team_stats[0]["playoffRank"]["rank"]
 
 # team[:games_points_for] = @team_stats[0]["stats"]["standings"]["pointsFor"]

@@ -31,3 +31,7 @@ class Api::TeamsController < ApplicationController
     render "show.json.jb"
   end
 end
+
+######11/8 code currently working for team search before changing the season info ####
+# .get("https://api.mysportsfeeds.com/v2.1/pull/#{team_league}/2019-2020-regular/standings.json?team=#{team_api_id}")
+# .parse["teams"]
