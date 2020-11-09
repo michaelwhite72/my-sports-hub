@@ -13,10 +13,10 @@
 # ])
 
 teams = Team.create!([
-  { name: "Seattle Mariners", logo: "Mariners.jpg", league: "MLB", api_id: "SEA", api_used: "sportsfeed" },
-  { name: "New York Yankees", logo: "Yankees.jpg", league: "MLB", api_id: "OAK", api_used: "sportsfeed" },
-  { name: "Ottawa Senators", logo: "Senators.jpg", league: "NHL", api_id: "OTT", api_used: "sportsfeed" },
-  { name: "San Jose Sharks", logo: "SJSharks.jpg", league: "NHL", api_id: "SJS", api_used: "sportsfeed" },
+  { name: "Texas Longhorns", logo: "Longhorns.jpg", league: "NCAAF", api_id: "Texas", api_used: "NCAAF_API" },
+# { name: "New York Yankees", logo: "Yankees.jpg", league: "MLB", api_id: "OAK", api_used: "sportsfeed" },
+# { name: "Ottawa Senators", logo: "Senators.jpg", league: "NHL", api_id: "OTT", api_used: "sportsfeed" },
+# { name: "San Jose Sharks", logo: "SJSharks.jpg", league: "NHL", api_id: "SJS", api_used: "sportsfeed" },
 # { name: "Dallas Mavericks", logo: "Mavericks.jpg", league: "NBA", api_id: "DAL", api_used: "sportsfeed" },
 ])
 

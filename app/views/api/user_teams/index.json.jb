@@ -1,24 +1,37 @@
 @teams.map do |team|
   team_hash = render partial: "api/teams/team.json.jb", locals: { team: team }
-  team_hash[:test_league] = "#{team.league}"
-  team_hash
-  api_response = HTTP
-    .headers({
-      # "X-User-Email" => Rails.application.credentials.aws[:email]},
-      "Authorization" => "#{Rails.application.credentials.sportsfeed_api[:api_key]}",
-    })
-    .get("https://api.mysportsfeeds.com/v2.1/pull/#{team.league}/latest/games.json?team=#{team.api_id}")
-    .parse["games"]
-  team_hash[:schedule] = api_response.map do |game|
-    {
-      start_time: game["schedule"]["startTime"],
-      week: game["schedule"]["week"],
-      away_team: game["schedule"]["awayTeam"]["abbreviation"],
-      home_team: game["schedule"]["homeTeam"]["abbreviation"],
-      broadcast: game["schedule"]["broadcasters"][0],
-    # Broadcast: game["schedule"],
-    }
-  end
 
+  ##Adding NCAAF if/ else loop
+  if team.league == "NCAAF"
+    api_response = HTTP
+      .get("https://api.collegefootballdata.com/games/media?year=2020&team=Texas").parse
+    team_hash[:schedule] = api_response.map do |game|
+      {
+        start_time: game["startTime"],
+        start_time_TBD: game["isStartTimeTBD"],
+        home_team: game["homeTeam"],
+        away_team: game["awayTeam"],
+        broadcast: game["outlet"],
+      }
+    end
+  else
+    api_response = HTTP
+      .headers({
+        # "X-User-Email" => Rails.application.credentials.aws[:email]},
+        "Authorization" => "#{Rails.application.credentials.sportsfeed_api[:api_key]}",
+      })
+      .get("https://api.mysportsfeeds.com/v2.1/pull/#{team.league}/latest/games.json?team=#{team.api_id}")
+      .parse["games"]
+    team_hash[:schedule] = api_response.map do |game|
+      {
+        start_time: game["schedule"]["startTime"],
+        week: game["schedule"]["week"],
+        away_team: game["schedule"]["awayTeam"]["abbreviation"],
+        home_team: game["schedule"]["homeTeam"]["abbreviation"],
+        broadcast: game["schedule"]["broadcasters"][0],
+      # Broadcast: game["schedule"],
+      }
+    end
+  end
   team_hash
 end

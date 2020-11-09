@@ -9,7 +9,9 @@ class Api::TeamsController < ApplicationController
     @team = Team.find(params[:id])
     team_search = @team[:name].gsub(" ", "%20")
     team_api_id = @team[:api_id]
-    team_league = @team[:league]
+    @team_league = @team[:league]
+
+    ##Team News##
     @team_news = HTTP
       .headers({
         # "X-User-Email" => Rails.application.credentials.aws[:email]},
@@ -18,15 +20,19 @@ class Api::TeamsController < ApplicationController
       .get("http://newsapi.org/v2/everything?q=#{team_search}&from=2020-10-26&sortBy=publishedAt")
       .parse["articles"]
 
-    # http://newsapi.org/v2/everything?q=bitcoin&from=2020-10-03&sortBy=publishedAt&apiKey=0c0742d9f8c94b659450fc99da6df3de
-
-    @team_stats = HTTP
-      .headers({
-        # "X-User-Email" => Rails.application.credentials.aws[:email]},
-        "Authorization" => "#{Rails.application.credentials.sportsfeed_api[:api_key]}",
-      })
-      .get("https://api.mysportsfeeds.com/v2.1/pull/#{team_league}/2019-2020-regular/standings.json?team=#{team_api_id}")
-      .parse["teams"]
+    ## Adding NCAAF If statement
+    if @team_league == "NCAAF"
+      @team_stats_ncaaf = HTTP
+        .get("https://api.collegefootballdata.com/records?year=2020&team=texas").parse
+    else
+      @team_stats = HTTP
+        .headers({
+          # "X-User-Email" => Rails.application.credentials.aws[:email]},
+          "Authorization" => "#{Rails.application.credentials.sportsfeed_api[:api_key]}",
+        })
+        .get("https://api.mysportsfeeds.com/v2.1/pull/#{@team_league}/2020-2021-regular/standings.json?team=#{team_api_id}")
+        .parse["teams"]
+    end
 
     render "show.json.jb"
   end
@@ -35,3 +41,12 @@ end
 ######11/8 code currently working for team search before changing the season info ####
 # .get("https://api.mysportsfeeds.com/v2.1/pull/#{team_league}/2019-2020-regular/standings.json?team=#{team_api_id}")
 # .parse["teams"]
+
+###API NEWS
+# @team_news = HTTP
+#   .headers({
+#     # "X-User-Email" => Rails.application.credentials.aws[:email]},
+#     "Authorization" => "Bearer #{Rails.application.credentials.news_api[:api_key]}",
+#   })
+#   .get("http://newsapi.org/v2/everything?q=#{team_search}&from=2020-10-26&sortBy=publishedAt")
+#   .parse["articles"
