@@ -1,15 +1,15 @@
 team = render partial: "team.json.jb", locals: { team: @team }
 
 # Grab all article for team from API News
-# team[:articles] = @team_news.map do |article|
-#   {
-#     source_name: article["source"]["name"],
-#     title: article["title"],
-#     description: article["description"],
-#     url: article["url"],
-#     url_image: article["urlToImage"],
-#   }
-# end
+team[:articles] = @team_news.map do |article|
+  {
+    source_name: article["source"]["name"],
+    title: article["title"],
+    description: article["description"],
+    url: article["url"],
+    url_image: article["urlToImage"],
+  }
+end
 # Article API feed END
 
 # team[:team_data] = @team_stats

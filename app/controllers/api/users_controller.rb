@@ -9,11 +9,11 @@ class Api::UsersController < ApplicationController
       password: params[:password],
       password_confirmation: params[:password_confirmation],
     )
-
+    ##user tags loop is created for team ids
     if @user.save
       #remove eval on front end build
-      if params[:team_ids].any?
-        eval(params[:team_ids]).each do |team_id|
+      if params[:team_ids]
+        (params[:team_ids]).each do |team_id|
           UserTeam.create(user_id: @user.id, team_id: team_id)
         end
       end
