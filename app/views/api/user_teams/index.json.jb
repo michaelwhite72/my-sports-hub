@@ -7,6 +7,7 @@
       .get("https://api.collegefootballdata.com/games/media?year=2020&team=Texas").parse
     team_hash[:schedule] = api_response.map do |game|
       {
+        week: game["week"],
         start_time: game["startTime"],
         start_time_TBD: game["isStartTimeTBD"],
         home_team: game["homeTeam"],

@@ -17,10 +17,10 @@ end
 
 # Team Information Feed Start
 if @team_league == "NCAAF"
-  team[:conference] = @team_stats_ncaaf[0]["conference"]
+  team[:conference_name] = @team_stats_ncaaf[0]["conference"]
   team[:games_played] = @team_stats_ncaaf[0]["total"]["games"]
-  team[:total_wins] = @team_stats_ncaaf[0]["total"]["wins"]
-  team[:total_losses] = @team_stats_ncaaf[0]["total"]["losses"]
+  team[:games_won] = @team_stats_ncaaf[0]["total"]["wins"]
+  team[:games_lost] = @team_stats_ncaaf[0]["total"]["losses"]
   team[:conference_wins] = @team_stats_ncaaf[0]["conferenceGames"]["wins"]
   team[:conference_losses] = @team_stats_ncaaf[0]["conferenceGames"]["losses"]
 else

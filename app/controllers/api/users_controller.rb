@@ -67,7 +67,7 @@ class Api::UsersController < ApplicationController
       if params[:team_ids]
         @user.user_teams.destroy_all
         #remove eval on front end build
-        eval(params[:team_ids]).each do |team_id|
+        (params[:team_ids]).each do |team_id|
           UserTeam.create(user_id: @user.id, team_id: team_id)
         end
       end

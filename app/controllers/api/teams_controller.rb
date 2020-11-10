@@ -10,6 +10,7 @@ class Api::TeamsController < ApplicationController
     team_search = @team[:name].gsub(" ", "%20")
     team_api_id = @team[:api_id]
     @team_league = @team[:league]
+    season = (params[:season])
 
     ##Team News##
     @team_news = HTTP
@@ -23,14 +24,16 @@ class Api::TeamsController < ApplicationController
     ## Adding NCAAF If statement
     if @team_league == "NCAAF"
       @team_stats_ncaaf = HTTP
-        .get("https://api.collegefootballdata.com/records?year=2020&team=texas").parse
+        .get("https://api.collegefootballdata.com/records?year=2020&team=#{team_api_id}").parse
+      @team_logo = HTTP
+        .get("").parse
     else
       @team_stats = HTTP
         .headers({
           # "X-User-Email" => Rails.application.credentials.aws[:email]},
           "Authorization" => "#{Rails.application.credentials.sportsfeed_api[:api_key]}",
         })
-        .get("https://api.mysportsfeeds.com/v2.1/pull/#{@team_league}/2020-2021-regular/standings.json?team=#{team_api_id}")
+        .get("https://api.mysportsfeeds.com/v2.1/pull/#{@team_league}/#{season}/standings.json?team=#{team_api_id}")
         .parse["teams"]
     end
 
