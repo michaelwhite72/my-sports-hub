@@ -4,17 +4,27 @@
   ##Adding NCAAF if/ else loop
   if team.league == "NCAAF"
     api_response = HTTP
-      .get("https://api.collegefootballdata.com/games/media?year=2020&team=Texas").parse
-    team_hash[:schedule] = api_response.map do |game|
-      {
-        week: game["week"],
-        start_time: game["startTime"],
-        start_time_TBD: game["isStartTimeTBD"],
-        home_team: game["homeTeam"],
-        away_team: game["awayTeam"],
-        broadcast: game["outlet"],
-      }
+      .get("https://api.collegefootballdata.com/games?year=2020&seasonType=regular&team=texas").parse
+
+    team_hash[:schedule] = api_response.filter_map do |game|
+      if game["start_date"].to_datetime >= Date.today
+        {
+          week: game["week"],
+          start_time: game["start_date"],
+          start_time_TBD: game["start_time_tbd"],
+          home_team: game["home_team"],
+          away_team: game["away_team"],
+          venue: game["venue"],
+        }
+      end
     end
+    # api_response = HTTP
+    # .get("https://api.collegefootballdata.com/games/media?year=2020&team=Texas").parse
+    # team_hash[:broadcast] = api_response.filter_map do |game|
+    #   {
+    #     broadcast: game["outlet"],
+    #   }
+    # end
   else
     api_response = HTTP
       .headers({
@@ -22,16 +32,18 @@
         "Authorization" => "#{Rails.application.credentials.sportsfeed_api[:api_key]}",
       })
       .get("https://api.mysportsfeeds.com/v2.1/pull/#{team.league}/latest/games.json?team=#{team.api_id}")
-      .parse["games"]
-    team_hash[:schedule] = api_response.map do |game|
-      {
-        start_time: game["schedule"]["startTime"],
-        week: game["schedule"]["week"],
-        away_team: game["schedule"]["awayTeam"]["abbreviation"],
-        home_team: game["schedule"]["homeTeam"]["abbreviation"],
-        broadcast: game["schedule"]["broadcasters"][0],
-      # Broadcast: game["schedule"],
-      }
+      .parse
+    # team_hash[:logo] = api_response["references"]["teamReferences"][0]["officialLogoImageSrc"]
+    team_hash[:schedule] = api_response["games"].filter_map do |game|
+      if game["schedule"]["startTime"].to_datetime >= Date.today
+        {
+          start_time: game["schedule"]["startTime"],
+          week: game["schedule"]["week"],
+          away_team: game["schedule"]["awayTeam"]["abbreviation"],
+          home_team: game["schedule"]["homeTeam"]["abbreviation"],
+          broadcast: game["schedule"]["broadcasters"][0],
+        }
+      end
     end
   end
   team_hash

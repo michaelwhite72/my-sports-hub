@@ -26,7 +26,6 @@ class Api::TeamsController < ApplicationController
       @team_stats_ncaaf = HTTP
         .get("https://api.collegefootballdata.com/records?year=2020&team=#{team_api_id}").parse
       @team_logo = HTTP
-        .get("").parse
     else
       @team_stats = HTTP
         .headers({
