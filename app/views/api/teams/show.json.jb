@@ -29,6 +29,15 @@ else
   team[:games_played] = @team_stats[0]["stats"]["gamesPlayed"]
   team[:games_won] = @team_stats[0]["stats"]["standings"]["wins"]
   team[:games_lost] = @team_stats[0]["stats"]["standings"]["losses"]
+  if @team_league == "NHL"
+    team[:overtime_wins] = @team_stats[0]["stats"]["standings"]["overtimeWins"]
+    team[:overtime_losses] = @team_stats[0]["stats"]["standings"]["overtimeLosses"]
+    team[:shootout_wins] = @team_stats[0]["stats"]["standings"]["shootoutWins"]
+    team[:shootout_losses] = @team_stats[0]["stats"]["standings"]["shootoutLosses"]
+  else
+    team[:games_tied] = @team_stats[0]["stats"]["standings"]["ties"]
+  end
+
   team[:games_tied] = @team_stats[0]["stats"]["standings"]["ties"]
   team[:overall_rank] = @team_stats[0]["overallRank"]["rank"]
   team[:conference_name] = @team_stats[0]["conferenceRank"]["conferenceName"]
