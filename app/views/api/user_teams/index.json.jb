@@ -18,6 +18,8 @@
         }
       end
     end
+
+#####Adding the broodcast to the NCAAF feed, but it different API Url.  Need to include in loop above####
     # api_response = HTTP
     # .get("https://api.collegefootballdata.com/games/media?year=2020&team=Texas").parse
     # team_hash[:broadcast] = api_response.filter_map do |game|
@@ -25,15 +27,15 @@
     #     broadcast: game["outlet"],
     #   }
     # end
+
+
   else
     api_response = HTTP
       .headers({
-        # "X-User-Email" => Rails.application.credentials.aws[:email]},
         "Authorization" => "#{Rails.application.credentials.sportsfeed_api[:api_key]}",
       })
       .get("https://api.mysportsfeeds.com/v2.1/pull/#{team.league}/latest/games.json?team=#{team.api_id}")
       .parse
-    # team_hash[:logo] = api_response["references"]["teamReferences"][0]["officialLogoImageSrc"]
     team_hash[:schedule] = api_response["games"].filter_map do |game|
       if game["schedule"]["startTime"].to_datetime >= Date.today
         {

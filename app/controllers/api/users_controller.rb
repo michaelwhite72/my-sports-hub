@@ -25,28 +25,11 @@ class Api::UsersController < ApplicationController
 
   def show
     @user = current_user
-    # user_teams = user.teams
-    # schedule = {} ##there will be a team key, and a array of hashes for each key value
-    #looping thru user teams with an each loop
-    #setting the response data to key & data
-    ### USER TEAM INFO SHOW
-    # team_api_id = @team[:api_id]
-    # team_league = @team[:league]
-
-    # @team_game_info = HTTP
-    #   .headers({
-    #     # "X-User-Email" => Rails.application.credentials.aws[:email]},
-    #     "Authorization" => "#{Rails.application.credentials.sportsfeed_api[:api_key]}",
-    #   })
-    #   .get("https://api.mysportsfeeds.com/v2.1/pull/nba/latest/games.json?team=DET")
-    #   .parse["games"]
-
     render "show.json.jb"
   end
 
   def update
     @user = User.find(current_user.id)
-
     @user.name = params[:name] || @user.name
     @user.email = params[:email] || @user.email
 
@@ -54,6 +37,7 @@ class Api::UsersController < ApplicationController
       @user.password = params[:password]
     end
 
+    ### A password change option-may use if I integrate a modal on the front end
     # if params[:password]
     #   if @user.authenticate(params[:old_password])
     #     @user.update!(
@@ -66,7 +50,6 @@ class Api::UsersController < ApplicationController
     if @user.save
       if params[:team_ids]
         @user.user_teams.destroy_all
-        #remove eval on front end build
         (params[:team_ids]).each do |team_id|
           UserTeam.create(user_id: @user.id, team_id: team_id)
         end
@@ -79,7 +62,6 @@ class Api::UsersController < ApplicationController
 
   def destroy
     user = User.find(current_user.id)
-    # user = User.find(params[:id])
     user.destroy
     render json: { message: "The user has been successfully deleted!!!" }
   end

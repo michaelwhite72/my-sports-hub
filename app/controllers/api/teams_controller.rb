@@ -29,7 +29,6 @@ class Api::TeamsController < ApplicationController
     else
       @team_stats = HTTP
         .headers({
-          # "X-User-Email" => Rails.application.credentials.aws[:email]},
           "Authorization" => "#{Rails.application.credentials.sportsfeed_api[:api_key]}",
         })
         .get("https://api.mysportsfeeds.com/v2.1/pull/#{@team_league}/#{season}/standings.json?team=#{team_api_id}")
@@ -40,15 +39,3 @@ class Api::TeamsController < ApplicationController
   end
 end
 
-######11/8 code currently working for team search before changing the season info ####
-# .get("https://api.mysportsfeeds.com/v2.1/pull/#{team_league}/2019-2020-regular/standings.json?team=#{team_api_id}")
-# .parse["teams"]
-
-###API NEWS
-# @team_news = HTTP
-#   .headers({
-#     # "X-User-Email" => Rails.application.credentials.aws[:email]},
-#     "Authorization" => "Bearer #{Rails.application.credentials.news_api[:api_key]}",
-#   })
-#   .get("http://newsapi.org/v2/everything?q=#{team_search}&from=2020-10-26&sortBy=publishedAt")
-#   .parse["articles"

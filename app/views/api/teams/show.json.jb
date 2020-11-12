@@ -44,12 +44,11 @@ else
   team[:conference_rank] = @team_stats[0]["conferenceRank"]["rank"]
   team[:division_name] = @team_stats[0]["divisionRank"]["divisionName"]
   team[:division_rank] = @team_stats[0]["divisionRank"]["rank"]
-  # Team Information feed end
 
-  team[:playoff_rank] = @team_stats[0]["playoffRank"]["rank"]
-
-  team[:games_points_for] = @team_stats[0]["stats"]["standings"]["pointsFor"]
-  team[:games_points_against] = @team_stats[0]["stats"]["standings"]["pointsAgainst"]
+  #### For Playoff info - But not playoff not used in this current version due to limited functionality of free API
+  # team[:playoff_rank] = @team_stats[0]["playoffRank"]["rank"]
+  # team[:games_points_for] = @team_stats[0]["stats"]["standings"]["pointsFor"]
+  # team[:games_points_against] = @team_stats[0]["stats"]["standings"]["pointsAgainst"]
 end
 
 team
