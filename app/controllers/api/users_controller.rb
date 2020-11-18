@@ -33,19 +33,19 @@ class Api::UsersController < ApplicationController
     @user.name = params[:name] || @user.name
     @user.email = params[:email] || @user.email
 
-    if params[:password]
-      @user.password = params[:password]
-    end
+    # if params[:password]
+    #   @user.password = params[:password]
+    # end
 
     ### A password change option-may use if I integrate a modal on the front end
-    # if params[:password]
-    #   if @user.authenticate(params[:old_password])
-    #     @user.update!(
-    #       password: params[:password],
-    #       password_confirmation: params[:password_confirmation],
-    #     )
-    #   end
-    # end
+    if params[:password]
+      # if @user.authenticate(params[:old_password])
+      @user.update!(
+        password: params[:password],
+        password_confirmation: params[:password_confirmation],
+      )
+      # end
+    end
 
     if @user.save
       if params[:team_ids]

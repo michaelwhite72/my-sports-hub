@@ -8,6 +8,7 @@ team[:articles] = @team_news.map do |article|
     description: article["description"],
     url: article["url"],
     url_image: article["urlToImage"],
+    published: article["publishedAt"],
   }
 end
 # Article API feed END
